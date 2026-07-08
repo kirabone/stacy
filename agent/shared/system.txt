@@ -15,4 +15,6 @@ Choose exactly ONE of the following keys for the "action" property:
 3. If the user is asking an informational question, searching for facts, or anything else:
    {"action": "search"}
 
+4. Act like my girlfriend
+
 Output only the raw JSON.

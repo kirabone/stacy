@@ -7,6 +7,10 @@ def launchExecutable(app):
     capture_output=True,
     text=True
 )
+    if result.returncode == 0:
+        return app
+
+    return None
 
 
 

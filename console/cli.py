@@ -1,9 +1,11 @@
-from agent.api import message
+from agent.router import message
 import json
+
+provider = input("provider>")
 
 while True:
 
     prompt = input(">")
-    response = message(prompt)
+    response = message(provider, prompt)
     print(response["message"])
     
