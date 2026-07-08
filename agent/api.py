@@ -48,15 +48,10 @@ def message(prompt):
         ],
     )
 
+    
+    response = json.loads(response["message"]["content"])
+
     print(response)
-
-    try:
-        response = json.loads(response["message"]["content"])
-    except json.JSONDecodeError:
-        print("Invalid JSON returned by model:")
-        print(response["message"]["content"])
-        raise
-
     action = response.get("action")
 
     if action not in features:

@@ -1,0 +1,95 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# pytest
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+
+# Ruff
+.ruff_cache/
+
+# Coverage
+.coverage
+htmlcov/
+
+# =========================
+# Virtual Environments
+# =========================
+.venv/
+venv/
+env/
+ENV/
+stacy/
+
+# =========================
+# Environment Variables
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+.history/
+
+# =========================
+# JetBrains
+# =========================
+.idea/
+
+# =========================
+# Build Artifacts
+# =========================
+*.exe
+*.dll
+*.so
+*.o
+*.obj
+*.out
+*.a
+*.lib
+*.class
+
+# C/C++
+*.pdb
+*.ilk
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# OS Junk
+# =========================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# =========================
+# Temporary Files
+# =========================
+*.tmp
+*.temp
+
+# Local database
+*.db
+*.sqlite3
+
+# Archives
+*.zip
+*.7z
+*.rar
+
+# Python packaging
+dist/
+build/
+*.egg-info/
