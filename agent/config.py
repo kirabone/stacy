@@ -1,10 +1,7 @@
 from pathlib import Path
 import json
-
-CONFIG_PATH = Path(__file__).parent / "config.json"
-
-with open(CONFIG_PATH, "r", encoding="utf-8") as f:
-    CONFIG = json.load(f)
+from agent.providers.google.api import messageGoogle
+from agent.providers.groq.api import messageGroq
 
 with open("agent/system/system.txt", "r", encoding="utf-8") as file:
     SYSTEM = file.read()
@@ -12,4 +9,9 @@ with open("agent/system/system.txt", "r", encoding="utf-8") as file:
 with open("agent/system/launch.txt", "r", encoding="utf-8") as file:
     LAUNCH = file.read()
 
-PROVIDER = CONFIG["provider"]
+PROVIDER = "groq"
+
+providers = {
+    "google" : messageGoogle,
+    "groq" : messageGroq
+}

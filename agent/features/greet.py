@@ -1,2 +1,3 @@
-def greet():
-    pass
+def greet(response):
+    print(response["greeting"])
+    

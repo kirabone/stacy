@@ -4,14 +4,10 @@ from google import genai
 from google.genai import types
 from dotenv import load_dotenv
 
-
 load_dotenv()
 
 api_key = os.getenv("GOOGLE")
 
-# Load the system instruction from your text file
-
-# Disconnected model.txt — Hardcoded directly for Google Gemini API
 with open("agent/providers/google/model.txt", "r", encoding="utf-8") as file:
     MODEL = file.read().strip()
 
@@ -22,7 +18,6 @@ def messageGoogle(prompt , system):
         model=MODEL,
         config=types.GenerateContentConfig(
             system_instruction=system,
-            # Forces Gemini to return valid, raw JSON directly
             response_mime_type="application/json", 
         ),
         contents=prompt,

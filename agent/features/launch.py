@@ -1,12 +1,14 @@
-from agent.config import PROVIDER , LAUNCH
-from agent.router import message
+from agent.config import LAUNCH
 from launcher.launchingEngine import launchExecutable
-
+from agent.message import message
 
 def launch(response):
 
-    prompt = response[prompt]
-    response = message(prompt)
-    launchExecutable(response["app"])
-    return 
+    prompt = response["prompt"]
+
+    response = message(prompt, LAUNCH)
+    executable = response["app"]
+    return launchExecutable(executable)
+
+
 
