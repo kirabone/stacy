@@ -1,6 +1,6 @@
 import os
 import json
-from groq import Groq
+from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -10,7 +10,10 @@ api_key = os.getenv("GROQ")
 with open("agent/providers/groq/model.txt", "r", encoding="utf-8") as file:
     MODEL = file.read().strip()
 
-client = Groq(api_key=api_key)
+client = OpenAI(
+    api_key=api_key,
+    base_url="https://api.groq.com/openai/v1"
+)
 
 def messageGroq(prompt, system):
     response = client.chat.completions.create(
@@ -22,7 +25,7 @@ def messageGroq(prompt, system):
             },
             {
                 "role": "user",
-                "content": prompt
+                "content": prompt if isinstance(prompt, str) else json.dumps(prompt)
             }
         ],
         response_format={"type": "json_object"},
