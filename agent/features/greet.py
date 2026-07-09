@@ -1,3 +1,3 @@
 def greet(response):
-    print(response["greeting"])
+    return response["message"]
     

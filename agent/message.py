@@ -1,7 +1,7 @@
-from agent.config import PROVIDER, providers
+from agent.config import PROVIDER, providerList, PERSONALITY
 
 def message(prompt, system):
 
-    response = providers[PROVIDER](prompt, system)
+    response = providerList[PROVIDER](prompt, system + PERSONALITY)
     return response
 

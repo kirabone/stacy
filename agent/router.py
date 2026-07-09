@@ -1,17 +1,8 @@
-from agent.features.launch import launch
-from agent.features.greet import greet
-from agent.config import PROVIDER , SYSTEM
-from agent.config import providers
-
-actions = {
-    "launch" : launch,
-    "greet" : greet,
-}
+from agent.config import PROVIDER , SYSTEM, providerList, actionList, PERSONALITY
 
 def message(prompt):
 
-    response = providers[PROVIDER](prompt, SYSTEM)
+    response = providerList[PROVIDER](prompt, SYSTEM + PERSONALITY)
     action = response["action"]
-    actions[action](response)
-
+    return actionList[action](response)
 

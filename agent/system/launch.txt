@@ -10,7 +10,8 @@ Do not include any conversational filler, markdown formatting blocks (such as ``
 
 ### JSON SCHEMA
 {
-  "app": "[Insert the extracted canonical or display name of the application here]"
+  "app": "[Insert the extracted canonical or display name of the application here]",
+  "message" : "[Insert the message in human language that you have opened the application]"
 }
 
 ---

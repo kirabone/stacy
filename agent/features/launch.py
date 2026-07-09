@@ -8,7 +8,8 @@ def launch(response):
 
     response = message(prompt, LAUNCH)
     executable = response["app"]
-    return launchExecutable(executable)
+    launchExecutable(executable)
+    return response["message"]
 
 
 
