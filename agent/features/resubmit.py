@@ -13,4 +13,5 @@ def resubmit(response):
         "available action" : list(actionList.keys())
     }
     
-    message(request, RESUBMIT)
+    response = message(request, RESUBMIT)
+    return actionList[action](response)
