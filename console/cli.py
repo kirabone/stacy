@@ -1,8 +1,12 @@
 from agent.router import router
 from datetime import datetime
 from logs import logger
+from agent.config import providerList, PROVIDER 
 
-logger.start("google")
+
+logger.start(
+    f"{PROVIDER}"
+)
 
 
 while True:
