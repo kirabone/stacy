@@ -2,7 +2,6 @@ import os
 import json
 from openai import OpenAI
 from dotenv import load_dotenv
-from logs import logger
 
 load_dotenv()
 
@@ -17,30 +16,6 @@ client = OpenAI(
 )
 
 def messageGroq(prompt, system):
-
-    logger.enter("GROQ", "messageGroq")
-
-    logger.state(
-        "GROQ",
-        f'USING MODEL "{MODEL}".'
-    )
-
-    logger.output(
-        "GROQ",
-        "SYSTEM PROMPT",
-        system
-    )
-
-    logger.output(
-        "GROQ",
-        "USER PROMPT",
-        prompt
-    )
-
-    logger.action(
-        "GROQ",
-        "SENDING REQUEST TO GROQ."
-    )
 
     try:
 
@@ -62,30 +37,9 @@ def messageGroq(prompt, system):
 
     except Exception as e:
 
-        logger.exception(
-            "GROQ",
-            e
-        )
-
-        logger.exit(
-            "GROQ",
-            "messageGroq"
-        )
-
         return None
 
     raw = response.choices[0].message.content
-
-    logger.output(
-        "GROQ",
-        "RAW RESPONSE",
-        raw
-    )
-
-    logger.action(
-        "GROQ",
-        "PARSING JSON RESPONSE."
-    )
 
     try:
 
@@ -93,52 +47,6 @@ def messageGroq(prompt, system):
 
     except json.JSONDecodeError:
 
-        logger.error(
-            "GROQ",
-            "MODEL RETURNED INVALID JSON."
-        )
-
-        logger.output(
-            "GROQ",
-            "INVALID RESPONSE",
-            raw
-        )
-
-        logger.exit(
-            "GROQ",
-            "messageGroq"
-        )
-
         return None
-
-    logger.output(
-        "GROQ",
-        "PARSED RESPONSE",
-        response
-    )
-
-    if "action" in response:
-
-        logger.action(
-            "GROQ",
-            "ROUTING RESPONSE TO ROUTER."
-        )
-
-    else:
-
-        logger.action(
-            "GROQ",
-            "RETURNING RESPONSE TO CALLER."
-        )
-
-    logger.returning(
-        "GROQ",
-        response
-    )
-
-    logger.exit(
-        "GROQ",
-        "messageGroq"
-    )
 
     return response

@@ -1,38 +1,14 @@
 from agent.router import router
-from datetime import datetime
-from logs import logger
 from agent.config import providerList, PROVIDER 
-
-
-logger.start(
-    f"{PROVIDER}"
-)
 
 
 while True:
 
-    logger.divider()
-
-    logger.info(
-        "TRANSCRIPT",
-        f"NEW CONVERSATION TURN | {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-    )
     try :
         prompt = input("> ")
     except KeyboardInterrupt:
         print("bye ")
         break
-
-    logger.input(
-        "USER",
-        "PROMPT",
-        prompt
-    )
-
-    logger.enter(
-        "ROUTER",
-        "message"
-    )
 
     response = router(prompt)
     try:
@@ -42,21 +18,4 @@ while True:
     except Exception as e:
         pass
 
-    logger.exit(
-        "ROUTER",
-        "message"
-    )
-
-    logger.output(
-        "ASSISTANT",
-        "FINAL RESPONSE",
-        response
-    )
-
     print(response)
-
-    logger.returning(
-        "TRANSCRIPT",
-        "TURN COMPLETE"
-    )
-    
