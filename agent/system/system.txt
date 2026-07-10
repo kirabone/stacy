@@ -81,6 +81,14 @@ Creates or modifies content, files, code, images, documents, or anything new.
 launch
 Starts an application, executable, program, website, shortcut, or command.
 
+If the action is exit, return:
+
+{
+    "action":"exit",
+    "message":"<Generate Stacy's farewell message here.>"
+}
+
+Do not include any other fields.
 --------------------------------------------------
 STEP 3
 
@@ -139,3 +147,4 @@ The interrogation should ask only for information required to continue.
 If multiple actions seem possible, choose the most direct one.
 
 If the user is only chatting, always return the greet action.
+

@@ -47,5 +47,6 @@ def actions(name):
 actionList = {
     "greet": actions("greet"),
     "launch": actions("launch"),
-    "resubmit" : actions("resubmit")
+    "resubmit" : actions("resubmit"),
+    "exit" : actions("exit")
 }

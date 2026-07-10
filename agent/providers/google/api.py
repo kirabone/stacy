@@ -24,69 +24,194 @@ with open("agent/providers/google/model.txt", "r", encoding="utf-8") as file:
 
 client = genai.Client(api_key=api_key)
 
-def messageGoogle(prompt , system):
+def messageGoogle(prompt, system):
+
+    logger.enter("GOOGLE", "messageGoogle")
+
+    logger.state(
+        "GOOGLE",
+        f'USING MODEL "{MODEL}".'
+    )
+
+    logger.output(
+        "GOOGLE",
+        "SYSTEM PROMPT",
+        system
+    )
+
+    logger.output(
+        "GOOGLE",
+        "USER PROMPT",
+        prompt
+    )
+
+    logger.action(
+        "GOOGLE",
+        "SENDING REQUEST TO GOOGLE AI."
+    )
+
     try:
+
         response = client.models.generate_content(
             model=MODEL,
             config=types.GenerateContentConfig(
                 system_instruction=system,
-                response_mime_type="application/json", 
+                response_mime_type="application/json",
             ),
             contents=prompt,
         )
 
-        logger.info(f"RESPONSE RECEIVED FROM GOOGLE AI. : {response}")
-
     except ResourceExhausted:
-        logger.error("GOOGLE AI QUOTA OR RATE LIMIT EXCEEDED.")
+
+        logger.error(
+            "GOOGLE",
+            "GOOGLE AI QUOTA OR RATE LIMIT EXCEEDED."
+        )
+
+        logger.exit("GOOGLE", "messageGoogle")
+
         return None
 
     except NotFound:
-        logger.error(f'MODEL "{MODEL}" WAS NOT FOUND.')
+
+        logger.error(
+            "GOOGLE",
+            f'MODEL "{MODEL}" WAS NOT FOUND.'
+        )
+
+        logger.exit("GOOGLE", "messageGoogle")
+
         return None
 
     except InvalidArgument as e:
-        logger.error(f"INVALID REQUEST: {e}")
+
+        logger.exception(
+            "GOOGLE",
+            e
+        )
+
+        logger.exit("GOOGLE", "messageGoogle")
+
         return None
 
     except DeadlineExceeded:
-        logger.error("GOOGLE AI REQUEST TIMED OUT.")
+
+        logger.error(
+            "GOOGLE",
+            "REQUEST TIMED OUT."
+        )
+
+        logger.exit("GOOGLE", "messageGoogle")
+
         return None
 
     except PermissionDenied:
-        logger.error("PERMISSION DENIED. API KEY HAS NO ACCESS TO THIS MODEL.")
+
+        logger.error(
+            "GOOGLE",
+            "PERMISSION DENIED."
+        )
+
+        logger.exit("GOOGLE", "messageGoogle")
+
         return None
 
     except Unauthenticated:
-        logger.error("AUTHENTICATION FAILED. INVALID OR MISSING API KEY.")
+
+        logger.error(
+            "GOOGLE",
+            "AUTHENTICATION FAILED."
+        )
+
+        logger.exit("GOOGLE", "messageGoogle")
+
         return None
 
     except ServiceUnavailable:
-        logger.error("GOOGLE AI SERVICE IS TEMPORARILY UNAVAILABLE.")
+
+        logger.error(
+            "GOOGLE",
+            "SERVICE UNAVAILABLE."
+        )
+
+        logger.exit("GOOGLE", "messageGoogle")
+
         return None
 
     except Exception as e:
-        logger.exception(f"UNEXPECTED GOOGLE AI ERROR: {e}")
+
+        logger.exception(
+            "GOOGLE",
+            e
+        )
+
+        logger.exit("GOOGLE", "messageGoogle")
+
         return None
 
-    logger.debug("PARSING JSON RESPONSE...")
+    logger.output(
+        "GOOGLE",
+        "RAW RESPONSE",
+        response.text
+    )
+
+    logger.action(
+        "GOOGLE",
+        "PARSING JSON RESPONSE."
+    )
 
     try:
+
         response = json.loads(response.text)
-        logger.info("JSON PARSED SUCCESSFULLY.")
 
     except json.JSONDecodeError:
-        logger.error("MODEL RETURNED INVALID JSON.")
-        logger.debug(f"RAW RESPONSE:\n{response.text}")
-        return None
-     
-    logger.debug("GOOGLE AI API", f"RESPONSE : {response}")
-    if "action" in response:
-        logger.info("GOOGLE AI API", f"DATA TRANSFERRED TO THE ROUTER : {response}")
-    else:
-        logger.info("GOOGLE AI API", f"DATA TRANSFERRED TO THE MESSAGES : {response}")
-    return response
 
+        logger.error(
+            "GOOGLE",
+            "MODEL RETURNED INVALID JSON."
+        )
+
+        logger.output(
+            "GOOGLE",
+            "INVALID RESPONSE",
+            response.text
+        )
+
+        logger.exit("GOOGLE", "messageGoogle")
+
+        return None
+
+    logger.output(
+        "GOOGLE",
+        "PARSED RESPONSE",
+        response
+    )
+
+    if "action" in response:
+
+        logger.action(
+            "GOOGLE",
+            "ROUTING RESPONSE TO ROUTER."
+        )
+
+    else:
+
+        logger.action(
+            "GOOGLE",
+            "RETURNING RESPONSE TO CALLER."
+        )
+
+    logger.returning(
+        "GOOGLE",
+        response
+    )
+
+    logger.exit(
+        "GOOGLE",
+        "messageGoogle"
+    )
+
+    return response
 
 
 

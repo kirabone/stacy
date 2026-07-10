@@ -1,14 +1,58 @@
-from agent.router import message
-from datetime import datetime 
+from agent.router import router
+from datetime import datetime
 from logs import logger
 
-logger.start(f"google-{datetime.now()}")
+logger.start("google")
+
 
 while True:
 
-    prompt = input(">")
-    print(message(prompt))
+    logger.divider()
 
-    
-    
+    logger.info(
+        "TRANSCRIPT",
+        f"NEW CONVERSATION TURN | {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+    )
+    try :
+        prompt = input("> ")
+    except KeyboardInterrupt:
+        print("bye ")
+        break
+
+    logger.input(
+        "USER",
+        "PROMPT",
+        prompt
+    )
+
+    logger.enter(
+        "ROUTER",
+        "message"
+    )
+
+    response = router(prompt)
+    try:
+        if response["action"] == "exit":
+            print(response["message"])
+            break
+    except Exception as e:
+        pass
+
+    logger.exit(
+        "ROUTER",
+        "message"
+    )
+
+    logger.output(
+        "ASSISTANT",
+        "FINAL RESPONSE",
+        response
+    )
+
+    print(response)
+
+    logger.returning(
+        "TRANSCRIPT",
+        "TURN COMPLETE"
+    )
     
